@@ -1,0 +1,18 @@
+// Import all of Bootstrap's CSS
+@import "bootstrap/scss/bootstrap";
+
+nav{
+    background-color: #95275c;
+}
+
+.h2{
+    color: #95275c;
+}
+
+.btn-primary{
+    background-color: #95275c;
+}
+
+.btn-primary:hover{
+    background-color: #65183d;
+}
