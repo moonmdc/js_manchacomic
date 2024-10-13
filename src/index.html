@@ -40,8 +40,9 @@
     </nav>
 
     <div id="container">
-      <div id="containerForm" class="m-5">
-        <form class="row g-3 needs-validation" novalidate>
+      <div id="containerForm d-flex " class="m-5">
+        <form class="row g-1 mx-auto p-2  text-dark" >
+          <p class="h2">Formulario</p>
           
           <div class="form-group mb-3">
             <label for="activityName" class="form-label">Nombre Actividad</label>
@@ -89,11 +90,15 @@
                             
             </select>
           </div>
-
-
-          <button type="submit" class="btn text-light">Submit</button>
+          <div class=" d-flex justify-content-end">
+            <button type="submit" class="btn text-light btn-primary min-w-100">Añadir Actividad</button>
+          </div>
+          
         </form>
       </div>
+
+
+
     </div>
 
     <script type="module" src="./js/app.js"></script>
