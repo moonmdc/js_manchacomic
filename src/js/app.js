@@ -1,8 +1,8 @@
 const showHour = () => {   
     const daySelected = document.getElementById('day').value //preguntar
-    const hourSelect = document.getElementById('hour')
+    const openingTime = document.getElementById('openHour')
 
-    hourSelect.innerHTML = '<option value="">-- Selecciona una hora --</option>'; //limpiar lo anterior
+    openingTime.innerHTML = '<option value="">-- Selecciona la hora de apertura --</option>'; //limpiar lo anterior
 
     const timeTable = {
         "viernes": ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
@@ -10,20 +10,37 @@ const showHour = () => {
         "domingo": ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
     }
 
+    const openHour = timeTable[daySelected] 
     
-    const hour = timeTable[daySelected] 
-
-    if (hour) {
-        for (let i = 0; i < hour.length; i++) { //agregar las horas al select
+    if (openHour) {
+        for (let i = 0; i < openHour.length; i++) { //agregar las horas al select
             const option = document.createElement('option')
-            option.value = hour[i]
-            option.text = hour[i]
-            hourSelect.appendChild(option)
+            option.value = openHour[i]
+            option.text = openHour[i]
+            openingTime.appendChild(option)
         }
     }
+
+    const closingTime = document.getElementById('closeHour');
+    closingTime.innerHTML = '<option value="">-- Selecciona la hora de cierre --</option>';
+
+    openingTime.addEventListener('change', () => {
+        const selectedOpeningHour = openingTime.value;
+        
+        closingTime.innerHTML = '<option value="">-- Selecciona la hora de cierre --</option>';
+        const closeHour = openHour.filter(hour => hour > selectedOpeningHour);
+
+        if (closeHour) {
+            for (let i = 0; i < closeHour.length; i++) {
+                const option = document.createElement('option');
+                option.value = closeHour[i];
+                option.text = closeHour[i];
+                closingTime.appendChild(option);
+            }
+        }
+    });
   
 }
-
 document.getElementById('day').addEventListener('change', showHour)
 
 const showPlace = () =>{
@@ -57,7 +74,6 @@ const showPlace = () =>{
         });
     }
 }
-
 document.getElementById('typeActivity').addEventListener('change', showPlace)
 
 
