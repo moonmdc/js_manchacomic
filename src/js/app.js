@@ -1,7 +1,7 @@
-const daySelected = document.getElementById('day').value
-const hourSelect = document.getElementById('hour')
-
 const showHour = () => {   
+    const daySelected = document.getElementById('day').value //preguntar
+    const hourSelect = document.getElementById('hour')
+
     hourSelect.innerHTML = '<option value="">-- Selecciona una hora --</option>'; //limpiar lo anterior
 
     const timeTable = {
@@ -24,7 +24,41 @@ const showHour = () => {
   
 }
 
-document.getElementById('day').addEventListener('change', showHour);
-    // Agregar el evento "change" al select de día para ejecutar showHour al cambiar
+document.getElementById('day').addEventListener('change', showHour)
+
+const showPlace = () =>{
+    const activity = document.getElementById('typeActivity').value
+    const place = document.getElementById('place')
+
+    const places = {
+        lugar1: "Jardines del Prado",
+        lugar2: "Antiguo Casino",
+        lugar3: "Cueva"
+    }
+
+    place.innerHTML = '<option value="">-- Selecciona un lugar --</option>';
+
+    const activityPlaces = {
+        charla: [places.lugar2, places.lugar3],
+        taller: [places.lugar2, places.lugar3],
+        juegoMesa: [places.lugar1],
+        wargame: [places.lugar2, places.lugar3],
+        rolSr: [places.lugar2, places.lugar3]
+    };
+
+    const possiblePlaces = activityPlaces[activity];
+
+    if (possiblePlaces) {
+        possiblePlaces.forEach((placeName) => {
+            const option = document.createElement('option');
+            option.value = placeName;
+            option.text = placeName;
+            place.appendChild(option);  // Agrega la opción al select
+        });
+    }
+}
+
+document.getElementById('typeActivity').addEventListener('change', showPlace)
+
 
 
