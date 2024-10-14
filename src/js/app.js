@@ -1,6 +1,13 @@
+import { ActivityClass } from "../classes/activity";
 
+const collectActivities = () => {
+    return JSON.parse(localStorage.getItem('activities'))
+}
 
-const showHour = () => {   
+let activities = collectActivities()
+if (activities == null) activities = []
+
+const showHour = () => {
     const daySelected = document.getElementById('day').value //preguntar
     const openingTime = document.getElementById('openHour')
 
@@ -12,8 +19,8 @@ const showHour = () => {
         "domingo": ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
     }
 
-    const openHour = timeTable[daySelected] 
-    
+    const openHour = timeTable[daySelected]
+
     if (openHour) {
         for (let i = 0; i < openHour.length; i++) { //agregar las horas al select
             const option = document.createElement('option')
@@ -28,7 +35,7 @@ const showHour = () => {
 
     openingTime.addEventListener('change', () => {
         const selectedOpeningHour = openingTime.value;
-        
+
         closingTime.innerHTML = '<option value="">-- Selecciona la hora de cierre --</option>';
         const closeHour = openHour.filter(hour => hour > selectedOpeningHour);
 
@@ -41,11 +48,11 @@ const showHour = () => {
             }
         }
     });
-  
+
 }
 document.getElementById('day').addEventListener('change', showHour)
 
-const showPlace = () =>{
+const showPlace = () => {
     const activity = document.getElementById('typeActivity').value
     const place = document.getElementById('place')
 
@@ -101,11 +108,30 @@ const showTable = () => {
         row.appendChild(actividadV);
         row.appendChild(actividadS);
         row.appendChild(actividadD);
-        
+
         // Agregar la fila al cuerpo de la tabla
         bodyTable.appendChild(row);
     }
 }
-
 showTable()
 
+const saveActivity = (activity) => {
+    // Asumiendo que 'activities' es un array previamente definido
+    activities.push(activity);
+    localStorage.setItem('activities', JSON.stringify(activities));
+}
+
+const activityForm = () => {
+    const newActivity = new ActivityClass(
+        document.getElementById('typeActivity').value,
+        document.getElementById('place').value,
+        document.getElementById('day').value,
+        document.getElementById('openHour').value,
+        document.getElementById('closeHour').value 
+    );
+
+    
+    saveActivity(newActivity);
+
+}
+activityForm()
