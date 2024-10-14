@@ -1,3 +1,5 @@
+
+
 const showHour = () => {   
     const daySelected = document.getElementById('day').value //preguntar
     const openingTime = document.getElementById('openHour')
@@ -76,5 +78,34 @@ const showPlace = () =>{
 }
 document.getElementById('typeActivity').addEventListener('change', showPlace)
 
+const showTable = () => {
+    const bodyTable = document.getElementById('activityTable');
 
+    for (let i = 10; i < 22; i++) {
+        const row = document.createElement('tr');
+        row.classList.add('horas');
+
+        const hour = document.createElement('td');
+        hour.classList.add('hora');
+        hour.innerText = `${i}:00 -- ${i + 1}:00`;
+
+        let actividadV = document.createElement('td');
+        actividadV.classList.add(`viernes-${i}`);
+        let actividadS = document.createElement('td');
+        actividadS.classList.add(`sabado-${i}`);
+        let actividadD = document.createElement('td');
+        actividadD.classList.add(`domingo-${i}`);
+
+        // Usar "row" en lugar de "fila"
+        row.appendChild(hour);
+        row.appendChild(actividadV);
+        row.appendChild(actividadS);
+        row.appendChild(actividadD);
+        
+        // Agregar la fila al cuerpo de la tabla
+        bodyTable.appendChild(row);
+    }
+}
+
+showTable()
 
