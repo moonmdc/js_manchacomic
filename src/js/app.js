@@ -1,3 +1,10 @@
+const collectActivities = () => {
+    return JSON.parse(localStorage.getItem('activities'))
+}
+
+let activities = collectActivities()
+if (activities == null) activities = []
+
 const showHour = () => {   
     const daySelected = document.getElementById('day').value //preguntar
     const openingTime = document.getElementById('openHour')
@@ -76,5 +83,25 @@ const showPlace = () =>{
 }
 document.getElementById('typeActivity').addEventListener('change', showPlace)
 
+document.getElementById('activityForm').addEventListener('submit', (event) => {
+    event.preventDefault();
 
+    const activity = {
+        clase: document.getElementById('typeActivity').value,
+        lugar: document.getElementById('place').value,
+        dia: document.getElementById('day').value,
+        horaApertura: document.getElementById('openHour').value,
+        horaCierre: document.getElementById('closeHour').value
+    };
+
+    //vaciar casillas
+    document.getElementById('activityForm').reset()
+    saveActivity(activity);
+
+});
+
+const saveActivity = (activity) => {
+    activities.push(activity)
+    localStorage.setItem('activities', JSON.stringify(activities))
+}
 
