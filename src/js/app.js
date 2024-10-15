@@ -5,6 +5,7 @@ const collectActivities = () => {
 }
 
 let activities = collectActivities()
+
 if (activities == null) activities = []
 
 const showHour = () => {
@@ -85,35 +86,7 @@ const showPlace = () => {
 }
 document.getElementById('typeActivity').addEventListener('change', showPlace)
 
-const showTable = () => {
-    const bodyTable = document.getElementById('activityTable');
 
-    for (let i = 10; i < 22; i++) {
-        const row = document.createElement('tr');
-        row.classList.add('horas');
-
-        const hour = document.createElement('td');
-        hour.classList.add('hora');
-        hour.innerText = `${i}:00 -- ${i + 1}:00`;
-
-        let actividadV = document.createElement('td');
-        actividadV.classList.add(`viernes-${i}`);
-        let actividadS = document.createElement('td');
-        actividadS.classList.add(`sabado-${i}`);
-        let actividadD = document.createElement('td');
-        actividadD.classList.add(`domingo-${i}`);
-
-        // Usar "row" en lugar de "fila"
-        row.appendChild(hour);
-        row.appendChild(actividadV);
-        row.appendChild(actividadS);
-        row.appendChild(actividadD);
-
-        // Agregar la fila al cuerpo de la tabla
-        bodyTable.appendChild(row);
-    }
-}
-showTable()
 
 const saveActivity = (activity) => {
     // Asumiendo que 'activities' es un array previamente definido
@@ -121,17 +94,66 @@ const saveActivity = (activity) => {
     localStorage.setItem('activities', JSON.stringify(activities));
 }
 
+
 const activityForm = () => {
     const newActivity = new ActivityClass(
         document.getElementById('typeActivity').value,
         document.getElementById('place').value,
         document.getElementById('day').value,
         document.getElementById('openHour').value,
-        document.getElementById('closeHour').value 
+        document.getElementById('closeHour').value
     );
-
-    
     saveActivity(newActivity);
 
 }
-activityForm()
+document.addEventListener('submit', (e) => { activityForm() })
+
+const createTable = () => {
+    const tBody = document.getElementById('activityTable')
+
+    const startHour = 10;
+    const endHour = 22;
+
+    const thead = document.createElement('tHead');
+    const headerRow = document.createElement('tr');
+
+    const day = document.createElement('th')
+    day.innerText = 'Dia'
+    headerRow.appendChild(day)
+    
+    for (let i = startHour; i <= endHour; i++) {
+        const hourCell = document.createElement('th');
+        hourCell.innerText = `${i}:00`;
+        headerRow.appendChild(hourCell);
+    }
+
+    thead.appendChild(headerRow);
+    tBody.appendChild(thead)
+
+    const days = ['Viernes', 'Sábado', 'Domingo'];
+    const tbody = document.createElement('tBody');
+
+    days.forEach(day => {
+        const row = document.createElement('tr');
+
+        // Primera celda con el nombre del día
+        const dayName = document.createElement('td');
+        dayName.innerText = day;
+        row.appendChild(dayName);
+
+        // Celdas vacías para cada hora del día
+        for (let i = startHour; i <= endHour; i++) {
+            const eachHour = document.createElement('td');
+            eachHour.classList.add(`${day}-${i}`);  // Clase para identificar las celdas por día y hora
+            row.appendChild(eachHour);
+        }
+
+        tBody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+
+}
+createTable()
+
+
