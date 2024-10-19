@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,7 @@
     <script type="module" src="./js/main.js"></script>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg ">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand img-fluid" href="./index.html"><img src="./assets/images/Manchacomic-logo.png" alt="logoManchaComic" height="50px"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@
           <div class="form-group mb-3">
             <label for="typeActivity">Clase de actividad.</label>
             <select class="form-control" id="typeActivity">
-              <option selected disabled>-- Selecciona la actividad --</option>
+              <option selected disabled value="">-- Selecciona la actividad --</option>
               <option value="charla">Charla</option>
               <option value="taller">Taller</option>
               <option value="juegoMesa">Juegos de mesa</option>
@@ -59,7 +59,7 @@
           <div class="form-group mb-3">
             <label for="place">Lugar</label>
             <select class="form-control" id="place">
-              <option selected disabled>-- Selecciona el lugar -- </option>
+              <option selected disabled value="">-- Selecciona el lugar -- </option>
               <option value="jardin">Jardines del Prado</option>
               <option value="casino">Antiguo Casino</option>
               <option value="cueva">Cueva</option>
@@ -70,10 +70,10 @@
           <div class="form-group mb-3">
             <label for="day">Día</label>
             <select class="form-control" id="day">
-              <option selected disabled>-- Selecciona el dia -- </option>
-              <option value="viernes">Viernes</option>
-              <option value="sabado">Sabado</option>
-              <option value="domingo">Domingo</option>
+              <option selected disabled value="">-- Selecciona el dia -- </option>
+              <option value="Viernes">Viernes</option>
+              <option value="Sabado">Sabado</option>
+              <option value="Domingo">Domingo</option>
               
             </select>
           </div>
@@ -89,7 +89,7 @@
           <div class="form-group mb-3">
             <label for="closeHour">Hora cierre</label>
             <select class="form-control" id="closeHour">
-              <option selected disabled>-- Selecciona la hora de cierre --</option>
+              <option selected disabled value>-- Selecciona la hora de cierre --</option>
                             
             </select>
           </div>
@@ -103,7 +103,7 @@
 
       <div>
         <p class="h2">Horario</p>
-        <table class="table" id="activityTable">
+        <table class="table .table-striped " id="activityTable">
           <thead class="tHead">
             
           </thead >
