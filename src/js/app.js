@@ -16,16 +16,16 @@ const showHour = () => {
     const timeTable = {
         "Viernes": ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
         "Sabado": ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
-        "Somingo": ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
+        "Domingo": ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
     }
 
     const openHour = timeTable[daySelected]
 
     if (openHour) {
-        for (let i = 0; i < openHour.length; i++) { //agregar las horas al select
+        for (const element of openHour) { //agregar las horas al select
             const option = document.createElement('option')
-            option.value = openHour[i]
-            option.text = openHour[i]
+            option.value = element
+            option.text = element
             //option.classList.add(closeHour[i])
             openingTime.appendChild(option)
         }
@@ -118,7 +118,7 @@ const createTable = () => {
     thead.appendChild(headerRow);
     table.appendChild(thead)
 
-    const days = ['Viernes', 'Sábado', 'Domingo'];
+    const days = ['Viernes', 'Sabado', 'Domingo'];
     const tbody = document.createElement('tBody');
 
     days.forEach(day => {
@@ -153,27 +153,43 @@ const createTable = () => {
 createTable()
 
 
+
 const showActivity = (activity) => {
     const name = activity.clase
     const dayA = activity.dia
     const openH = activity.horaA
-    const closeH = activity.hora
+    const closeH = activity.horaC
+
+    console.log(name, dayA, openH, closeH)
 
     for (let i = openH; i < closeH; i++) {
-        const cell = document.querySelector(`.${dayA}-${i}`);
+        const cell = document.getElementsByClassName(`container-${dayA}-${i}`);
+
+        console.log(cell)
 
         if (cell) {
 
             const activityButton = document.createElement('button');
             activityButton.innerText = name;
             activityButton.classList.add('activity-button');
+            activityButton.classList.add('btn')
+            activityButton.classList.add('btn-primary')
 
+           cell[0].appendChild(activityButton)
             
-            cell.appendChild(activityButton);
+            
         }
     }
 
 }
+
+const showActivities = () => {
+    activities.forEach(activity => {
+        showActivity(activity)
+    })
+}
+
+showActivities()
 
 const activityForm = () => {
     const typeActivity = document.getElementById('typeActivity');
