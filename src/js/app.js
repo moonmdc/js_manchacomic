@@ -168,16 +168,15 @@ const showActivity = (activity) => {
         console.log(cell)
 
         if (cell) {
-
             const activityButton = document.createElement('button');
             activityButton.innerText = name;
             activityButton.classList.add('activity-button');
             activityButton.classList.add('btn')
             activityButton.classList.add('btn-primary')
+            activityButton.setAttribute('id', 'botonActividades')
+            
 
-           cell[0].appendChild(activityButton)
-            
-            
+           cell[0].appendChild(activityButton) 
         }
     }
 
@@ -268,3 +267,5 @@ document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault();
     activityForm();
 });
+
+

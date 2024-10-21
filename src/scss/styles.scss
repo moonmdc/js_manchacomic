@@ -17,6 +17,10 @@ nav{
     background-color: #65183d;
 }
 #containerActivities{
-    min-height: 150%;
+    min-height: 90%;
+}
 
+#botonActividades{
+    display: block; /* Asegurar que los botones ocupen todo el ancho disponible */
+    width: 100%;
 }
