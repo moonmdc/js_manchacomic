@@ -153,11 +153,12 @@ const createTable = () => {
 createTable()
 
 const showActivity = (activity) => {
-    const name = activity.clase
+    const name = activity.nombre
     const dayA = activity.dia
     const openH = activity.horaA
     const closeH = activity.horaC
     const place = activity.lugar
+    const type = activity.clase
 
     console.log(name, dayA, openH, closeH)
 
@@ -196,9 +197,11 @@ const showActivityDetails = (event) => {
 
     modalTitle.textContent = button.dataset.name;
     modalBody.innerHTML = `
+        <p><strong>Nombre de la actividad:</strong> ${button.dataset.name}</p>
+        <p><strong>Tipo de actividad:</strong> ${button.dataset.type}</p>
         <p><strong>Día:</strong> ${button.dataset.day}</p>
-        <p><strong>Hora de inicio:</strong> ${button.dataset.openHour}</p>
-        <p><strong>Hora de fin:</strong> ${button.dataset.closeHour}</p>
+        <p><strong>Hora de inicio:</strong> ${button.dataset.openHour}:00</p>
+        <p><strong>Hora de fin:</strong> ${button.dataset.closeHour}:00</p>
         <p><strong>Lugar:</strong> ${button.dataset.place}</p>
     `;
 }
@@ -212,6 +215,7 @@ const showActivities = () => {
 showActivities()
 
 const activityForm = () => {
+    const activityName = document.getElementById('activityName');
     const typeActivity = document.getElementById('typeActivity');
     const place = document.getElementById('place');
     const day = document.getElementById('day');
@@ -224,6 +228,7 @@ const activityForm = () => {
     // mediante la funcion validateForm comprobamos que los campos tengan contenido si es correcto crea la actividad y la almacena en el localStorage
     if (validateForm()) {
         const newActivity = new ActivityClass(
+            activityName.value,
             typeActivity.value,
             place.value,
             day.value,
@@ -243,6 +248,9 @@ const validateForm = () => {
 
     if (typeActivity.value === "") {
         showErrorMessage(typeActivity, "Por favor, selecciona una actividad");
+        isValid = false;
+    } else if (activityName.value.length > 20) {
+        showErrorMessage(activityName, "El nombre no puede superar los 20 caracteres");
         isValid = false;
     }
 
