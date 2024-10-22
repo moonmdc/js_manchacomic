@@ -152,20 +152,17 @@ const createTable = () => {
 }
 createTable()
 
-
-
 const showActivity = (activity) => {
     const name = activity.clase
     const dayA = activity.dia
     const openH = activity.horaA
     const closeH = activity.horaC
+    const place = activity.lugar
 
     console.log(name, dayA, openH, closeH)
 
     for (let i = openH; i < closeH; i++) {
         const cell = document.getElementsByClassName(`container-${dayA}-${i}`);
-
-        console.log(cell)
 
         if (cell) {
             const activityButton = document.createElement('button');
@@ -173,13 +170,37 @@ const showActivity = (activity) => {
             activityButton.classList.add('activity-button');
             activityButton.classList.add('btn')
             activityButton.classList.add('btn-primary')
-            activityButton.setAttribute('id', 'botonActividades')
-            
 
-           cell[0].appendChild(activityButton) 
+            activityButton.setAttribute('id', 'botonActividades') 
+            activityButton.setAttribute('data-bs-toggle', 'modal')
+            activityButton.setAttribute('data-bs-target', '#activityModal') 
+
+            //insertar en el boton la informacion de la actividad
+            activityButton.dataset.name = name;
+            activityButton.dataset.day = dayA;
+            activityButton.dataset.openHour = openH;
+            activityButton.dataset.closeHour = closeH;
+            activityButton.dataset.place = place;
+
+            activityButton.addEventListener('click', showActivityDetails);
+
+            cell[0].appendChild(activityButton) 
         }
     }
+}
 
+const showActivityDetails = (event) => {
+    const button = event.target;
+    const modalTitle = document.querySelector('#activityModal .modal-title');
+    const modalBody = document.querySelector('#activityModal .modal-body');
+
+    modalTitle.textContent = button.dataset.name;
+    modalBody.innerHTML = `
+        <p><strong>Día:</strong> ${button.dataset.day}</p>
+        <p><strong>Hora de inicio:</strong> ${button.dataset.openHour}</p>
+        <p><strong>Hora de fin:</strong> ${button.dataset.closeHour}</p>
+        <p><strong>Lugar:</strong> ${button.dataset.place}</p>
+    `;
 }
 
 const showActivities = () => {
@@ -198,10 +219,8 @@ const activityForm = () => {
     const closeHour = document.getElementById('closeHour');
 
     //orden de ejecucion
-
     // 1º limpiamos los mensajes de errror anteriors
     clearErrorMessages();
-
     // mediante la funcion validateForm comprobamos que los campos tengan contenido si es correcto crea la actividad y la almacena en el localStorage
     if (validateForm()) {
         const newActivity = new ActivityClass(
