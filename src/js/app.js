@@ -243,16 +243,20 @@ const activityForm = () => {
 }
 
 const validateForm = () => {
-
     let isValid = true;
 
+    if (activityName.value.trim() === "") {
+        showErrorMessage(activityName, "Por favor, introduce un nombre para la actividad");
+        isValid = false;
+    } else if (activityName.value.length > 30) {
+        showErrorMessage(activityName, "El nombre no puede superar los 30 caracteres");
+        isValid = false;
+    }
+    
     if (typeActivity.value === "") {
         showErrorMessage(typeActivity, "Por favor, selecciona una actividad");
         isValid = false;
-    } else if (activityName.value.length > 20) {
-        showErrorMessage(activityName, "El nombre no puede superar los 20 caracteres");
-        isValid = false;
-    }
+    } 
 
     if (place.value === "") {
         showErrorMessage(place, "Por favor, selecciona un lugar");
