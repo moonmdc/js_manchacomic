@@ -169,6 +169,7 @@ const showActivity = (activity) => {
             activityButton.dataset.day = dayA;
             activityButton.dataset.openHour = openH;
             activityButton.dataset.place = place;
+            activityButton.dataset.type = type;
 
             activityButton.addEventListener('click', showActivityDetails);
 
