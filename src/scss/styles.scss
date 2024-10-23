@@ -22,11 +22,18 @@ nav{
   }
 
 .btn-primary{
-    background-color: #95275c;
+    border: 2px solid #95275c;
+    color: #65183d;
+    background-color: #fadfec;
+    width: 100%;
 }
 
 .btn-primary:hover{
+    border: 2px solid #fadfec;
+    color: #fadfec;
     background-color: #65183d;
+
+
 }
 #containerActivities{
     min-height: 90%;
