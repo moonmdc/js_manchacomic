@@ -31,26 +31,6 @@ const showHour = () => {
         }
     }
 
-    const closingTime = document.getElementById('closeHour');
-    closingTime.innerHTML = '<option selected disabled value="">-- Selecciona la hora de cierre --</option>';
-
-    openingTime.addEventListener('change', () => {
-        const selectedOpeningHour = openingTime.value;
-
-        closingTime.innerHTML = '<option selected disabled value="">-- Selecciona la hora de cierre --</option>';
-        const closeHour = openHour.filter(hour => hour > selectedOpeningHour);
-
-        if (closeHour) {
-            for (let i = 0; i < closeHour.length; i++) {
-                const option = document.createElement('option');
-                option.value = closeHour[i];
-                option.text = closeHour[i];
-                //option.classList.add(closeHour[i])
-            
-                closingTime.appendChild(option);
-            }
-        }
-    });
 
 }
 document.getElementById('day').addEventListener('change', showHour)
@@ -180,7 +160,6 @@ const showActivity = (activity) => {
             activityButton.dataset.name = name;
             activityButton.dataset.day = dayA;
             activityButton.dataset.openHour = openH;
-            activityButton.dataset.closeHour = closeH;
             activityButton.dataset.place = place;
 
             activityButton.addEventListener('click', showActivityDetails);
@@ -200,8 +179,7 @@ const showActivityDetails = (event) => {
         <p><strong>Nombre de la actividad:</strong> ${button.dataset.name}</p>
         <p><strong>Tipo de actividad:</strong> ${button.dataset.type}</p>
         <p><strong>Día:</strong> ${button.dataset.day}</p>
-        <p><strong>Hora de inicio:</strong> ${button.dataset.openHour}:00</p>
-        <p><strong>Hora de fin:</strong> ${button.dataset.closeHour}:00</p>
+        <p><strong>Hora de inicio:</strong> ${button.dataset.openHour}</p>
         <p><strong>Lugar:</strong> ${button.dataset.place}</p>
     `;
 }
@@ -220,8 +198,7 @@ const activityForm = () => {
     const place = document.getElementById('place');
     const day = document.getElementById('day');
     const openHour = document.getElementById('openHour');
-    const closeHour = document.getElementById('closeHour');
-
+2
     //orden de ejecucion
     // 1º limpiamos los mensajes de errror anteriors
     clearErrorMessages();
@@ -233,7 +210,7 @@ const activityForm = () => {
             place.value,
             day.value,
             openHour.value,
-            closeHour.value
+2
         );
         saveActivity(newActivity);
         showActivity(newActivity);
@@ -270,11 +247,6 @@ const validateForm = () => {
 
     if (openHour.value === "") {
         showErrorMessage(openHour, "Por favor, selecciona una hora de apertura");
-        isValid = false;
-    }
-
-    if (closeHour.value === "") {
-        showErrorMessage(closeHour, "Por favor, selecciona una hora de cierre");
         isValid = false;
     }
 
