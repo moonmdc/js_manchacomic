@@ -31,26 +31,6 @@ const showHour = () => {
         }
     }
 
-    const closingTime = document.getElementById('closeHour');
-    closingTime.innerHTML = '<option selected disabled value="">-- Selecciona la hora de cierre --</option>';
-
-    openingTime.addEventListener('change', () => {
-        const selectedOpeningHour = openingTime.value;
-
-        closingTime.innerHTML = '<option selected disabled value="">-- Selecciona la hora de cierre --</option>';
-        const closeHour = openHour.filter(hour => hour > selectedOpeningHour);
-
-        if (closeHour) {
-            for (let i = 0; i < closeHour.length; i++) {
-                const option = document.createElement('option');
-                option.value = closeHour[i];
-                option.text = closeHour[i];
-                //option.classList.add(closeHour[i])
-            
-                closingTime.appendChild(option);
-            }
-        }
-    });
 
 }
 document.getElementById('day').addEventListener('change', showHour)
@@ -153,13 +133,20 @@ const createTable = () => {
 createTable()
 
 const showActivity = (activity) => {
-    const name = activity.clase
+    const name = activity.nombre
     const dayA = activity.dia
     const openH = activity.horaA
     const closeH = activity.horaC
     const place = activity.lugar
+    const type = activity.clase
 
-    console.log(name, dayA, openH, closeH)
+    const lugarColores = {
+        "Jardines del Prado": "bg-success",  
+        "Antiguo Casino": "bg-info",         
+        "Cueva": "bg-danger"                 
+    };
+
+    const colorClass = lugarColores[place]
 
     for (let i = openH; i < closeH; i++) {
         const cell = document.getElementsByClassName(`container-${dayA}-${i}`);
@@ -169,17 +156,18 @@ const showActivity = (activity) => {
             activityButton.innerText = name;
             activityButton.classList.add('activity-button');
             activityButton.classList.add('btn')
-            activityButton.classList.add('btn-primary')
+            activityButton.classList.add(colorClass)
+
 
             activityButton.setAttribute('id', 'botonActividades') 
             activityButton.setAttribute('data-bs-toggle', 'modal')
             activityButton.setAttribute('data-bs-target', '#activityModal') 
+            activityButton.setAttribute('draggable', 'true')
 
             //insertar en el boton la informacion de la actividad
             activityButton.dataset.name = name;
             activityButton.dataset.day = dayA;
             activityButton.dataset.openHour = openH;
-            activityButton.dataset.closeHour = closeH;
             activityButton.dataset.place = place;
 
             activityButton.addEventListener('click', showActivityDetails);
@@ -196,9 +184,10 @@ const showActivityDetails = (event) => {
 
     modalTitle.textContent = button.dataset.name;
     modalBody.innerHTML = `
+        <p><strong>Nombre de la actividad:</strong> ${button.dataset.name}</p>
+        <p><strong>Tipo de actividad:</strong> ${button.dataset.type}</p>
         <p><strong>Día:</strong> ${button.dataset.day}</p>
         <p><strong>Hora de inicio:</strong> ${button.dataset.openHour}</p>
-        <p><strong>Hora de fin:</strong> ${button.dataset.closeHour}</p>
         <p><strong>Lugar:</strong> ${button.dataset.place}</p>
     `;
 }
@@ -211,40 +200,83 @@ const showActivities = () => {
 
 showActivities()
 
+const mostrarMensajeError = (mensaje) => {
+    console.log("Mostrando mensaje de error:", mensaje); // Añade este log
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message text-danger';
+    errorDiv.textContent = mensaje;
+    const form = document.querySelector('form');
+    form.insertBefore(errorDiv, form.lastChild);
+}
+
+const validarCapacidadLugar = (nuevaActividad) => {
+    const capacidadPorLugar = {
+        "Jardines del Prado": 5,
+        "Antiguo Casino": 10,
+        "Cueva": 2
+    };
+
+    const actividadesEnMismoTiempo = activities.filter(actividad => 
+        actividad.dia === nuevaActividad.dia &&
+        actividad.horaA === nuevaActividad.horaA &&
+        actividad.lugar === nuevaActividad.lugar
+    );
+
+    const capacidadDisponible = capacidadPorLugar[nuevaActividad.lugar] - actividadesEnMismoTiempo.length;
+
+    if (capacidadDisponible > 0) {
+        nuevaActividad.numeroSala = actividadesEnMismoTiempo.length + 1;
+        return true;
+    } else {
+        mostrarMensajeError(`No hay capacidad disponible en ${nuevaActividad.lugar} para este horario.`);
+        return false;
+    }
+}
+
 const activityForm = () => {
+    const activityName = document.getElementById('activityName');
     const typeActivity = document.getElementById('typeActivity');
     const place = document.getElementById('place');
     const day = document.getElementById('day');
     const openHour = document.getElementById('openHour');
-    const closeHour = document.getElementById('closeHour');
-
+2
     //orden de ejecucion
     // 1º limpiamos los mensajes de errror anteriors
     clearErrorMessages();
     // mediante la funcion validateForm comprobamos que los campos tengan contenido si es correcto crea la actividad y la almacena en el localStorage
     if (validateForm()) {
         const newActivity = new ActivityClass(
+            activityName.value,
             typeActivity.value,
             place.value,
             day.value,
             openHour.value,
-            closeHour.value
+2
         );
-        saveActivity(newActivity);
-        showActivity(newActivity);
-        // Limpiar el formulario después de guardar
-        document.querySelector('form').reset();
+        if (validarCapacidadLugar(newActivity)) {
+            saveActivity(newActivity);
+            showActivity(newActivity);
+            // Limpiar el formulario después de guardar
+            document.querySelector('form').reset();
+        }
     }
 }
 
 const validateForm = () => {
-
     let isValid = true;
 
+    if (activityName.value.trim() === "") {
+        showErrorMessage(activityName, "Por favor, introduce un nombre para la actividad");
+        isValid = false;
+    } else if (activityName.value.length > 20) {
+        showErrorMessage(activityName, "El nombre no puede superar los 20 caracteres");
+        isValid = false;
+    }
+    
     if (typeActivity.value === "") {
         showErrorMessage(typeActivity, "Por favor, selecciona una actividad");
         isValid = false;
-    }
+    } 
 
     if (place.value === "") {
         showErrorMessage(place, "Por favor, selecciona un lugar");
@@ -261,10 +293,6 @@ const validateForm = () => {
         isValid = false;
     }
 
-    if (closeHour.value === "") {
-        showErrorMessage(closeHour, "Por favor, selecciona una hora de cierre");
-        isValid = false;
-    }
 
     return isValid
 
@@ -288,3 +316,53 @@ document.querySelector('form').addEventListener('submit', (e) => {
 });
 
 
+const draggable = document.querySelectorAll('#botonActividades');
+const contenedor = document.querySelectorAll('#containerActivities');
+
+let divAlmacenado = null;
+
+draggable.forEach(div => {
+      div.addEventListener('dragstart', (event) =>{
+          div.classList.add('dragging');
+          divAlmacenado = div;
+          console.log(div);
+
+          event.dataTransfer.effectAllowed = "move"
+
+      });
+
+      div.addEventListener('dragend', () =>{
+          div.classList.remove('dragging');
+          divAlmacenado = null;
+      });
+});
+
+// Permitir el evento 'dragover' en el contenedor
+contenedor.forEach(container =>{
+
+    container.addEventListener('dragover', (event) => {
+        event.preventDefault(); // Necesario para permitir el drop y mover el elemento
+        const afterElement = getDragAfterElement(container, event.clientY);
+        const draggingElement = document.querySelector('.dragging');
+
+
+        // Inserta el elemento arrastrado antes del div correcto o al final si no hay ningún div después
+        if (afterElement == null) {
+          container.appendChild(draggingElement);
+        } else {
+          container.insertBefore(draggingElement, afterElement);
+        }
+      });
+})
+
+
+  // Función para determinar el div que está justo después de la posición donde se arrastra
+  const getDragAfterElement = (contenedor, y) => {
+      const draggableElements = [...contenedor.querySelectorAll('.draggable:not(.dragging)')];
+
+      return draggableElements.find(child => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        return offset < 0;
+      });
+  }

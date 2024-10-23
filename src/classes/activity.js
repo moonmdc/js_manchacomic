@@ -1,10 +1,11 @@
 export class ActivityClass {
-    constructor(clase, lugar, dia, horaA, horaC) { //falta nombre
+    constructor(nombre,clase, lugar, dia, horaA) { 
+        this.nombre = nombre,
         this.clase = clase,
         this.lugar = lugar,
         this.dia = dia,
         this.horaA = horaA,
-        this.horaC = horaC
-        // this.nombre = nombre
+        this.horaC = '22:00'
+
     }
 }
