@@ -140,7 +140,13 @@ const showActivity = (activity) => {
     const place = activity.lugar
     const type = activity.clase
 
-    console.log(name, dayA, openH, closeH)
+    const lugarColores = {
+        "Jardines del Prado": "bg-success",  
+        "Antiguo Casino": "bg-info",         
+        "Cueva": "bg-danger"                 
+    };
+
+    const colorClass = lugarColores[place]
 
     for (let i = openH; i < closeH; i++) {
         const cell = document.getElementsByClassName(`container-${dayA}-${i}`);
@@ -150,7 +156,8 @@ const showActivity = (activity) => {
             activityButton.innerText = name;
             activityButton.classList.add('activity-button');
             activityButton.classList.add('btn')
-            activityButton.classList.add('btn-primary')
+            activityButton.classList.add(colorClass)
+
 
             activityButton.setAttribute('id', 'botonActividades') 
             activityButton.setAttribute('data-bs-toggle', 'modal')

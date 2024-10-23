@@ -32,8 +32,6 @@ nav{
     border: 2px solid #fadfec;
     color: #fadfec;
     background-color: #65183d;
-
-
 }
 #containerActivities{
     min-height: 90%;
@@ -43,3 +41,41 @@ nav{
     display: block; 
     width: 100%;
 }
+
+#activityTable .bg-success {
+    background-color: #77c9f5 !important;
+    border: 2px solid #95275c;
+}
+
+#activityTable .bg-success:hover{
+    border: 2px solid #fadfec;
+    color: #fadfec;
+    background-color: #77c9f5;
+}
+  
+#activityTable .bg-info {
+    background-color: #83edbf !important;
+    border: 2px solid #95275c;
+  }
+
+  #activityTable .bg-info:hover{
+    border: 2px solid #fadfec;
+    color: #fadfec;
+    background-color: #83edbf;
+  }
+  
+  #activityTable .bg-danger {
+    background-color: #ed89ea !important;
+    border: 2px solid #95275c;
+  }
+
+  #activityTable .bg-danger:hover{
+    border: 2px solid #fadfec;
+    color: #fadfec;
+    background-color: #83edbf;
+  }
+  
+  #activityTable .activity-button {
+    color: black !important;
+  }
+
