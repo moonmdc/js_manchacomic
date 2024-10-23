@@ -6,6 +6,6 @@ export class ActivityClass {
         this.dia = dia,
         this.horaA = horaA,
         this.horaC = '22:00'
-        
+
     }
 }
