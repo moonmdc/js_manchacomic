@@ -192,6 +192,39 @@ const showActivities = () => {
 
 showActivities()
 
+const mostrarMensajeError = (mensaje) => {
+    console.log("Mostrando mensaje de error:", mensaje); // Añade este log
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message text-danger';
+    errorDiv.textContent = mensaje;
+    const form = document.querySelector('form');
+    form.insertBefore(errorDiv, form.lastChild);
+}
+
+const validarCapacidadLugar = (nuevaActividad) => {
+    const capacidadPorLugar = {
+        "Jardines del Prado": 5,
+        "Antiguo Casino": 10,
+        "Cueva": 2
+    };
+
+    const actividadesEnMismoTiempo = activities.filter(actividad => 
+        actividad.dia === nuevaActividad.dia &&
+        actividad.horaA === nuevaActividad.horaA &&
+        actividad.lugar === nuevaActividad.lugar
+    );
+
+    const capacidadDisponible = capacidadPorLugar[nuevaActividad.lugar] - actividadesEnMismoTiempo.length;
+
+    if (capacidadDisponible > 0) {
+        nuevaActividad.numeroSala = actividadesEnMismoTiempo.length + 1;
+        return true;
+    } else {
+        mostrarMensajeError(`No hay capacidad disponible en ${nuevaActividad.lugar} para este horario.`);
+        return false;
+    }
+}
+
 const activityForm = () => {
     const activityName = document.getElementById('activityName');
     const typeActivity = document.getElementById('typeActivity');
@@ -212,10 +245,12 @@ const activityForm = () => {
             openHour.value,
 2
         );
-        saveActivity(newActivity);
-        showActivity(newActivity);
-        // Limpiar el formulario después de guardar
-        document.querySelector('form').reset();
+        if (validarCapacidadLugar(newActivity)) {
+            saveActivity(newActivity);
+            showActivity(newActivity);
+            // Limpiar el formulario después de guardar
+            document.querySelector('form').reset();
+        }
     }
 }
 
@@ -225,8 +260,8 @@ const validateForm = () => {
     if (activityName.value.trim() === "") {
         showErrorMessage(activityName, "Por favor, introduce un nombre para la actividad");
         isValid = false;
-    } else if (activityName.value.length > 30) {
-        showErrorMessage(activityName, "El nombre no puede superar los 30 caracteres");
+    } else if (activityName.value.length > 20) {
+        showErrorMessage(activityName, "El nombre no puede superar los 20 caracteres");
         isValid = false;
     }
     
@@ -250,6 +285,7 @@ const validateForm = () => {
         isValid = false;
     }
 
+
     return isValid
 
 }
@@ -270,5 +306,6 @@ document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault();
     activityForm();
 });
+
 
 
