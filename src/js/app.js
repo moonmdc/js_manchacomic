@@ -162,6 +162,7 @@ const showActivity = (activity) => {
             activityButton.setAttribute('id', 'botonActividades') 
             activityButton.setAttribute('data-bs-toggle', 'modal')
             activityButton.setAttribute('data-bs-target', '#activityModal') 
+            activityButton.setAttribute('draggable', 'true')
 
             //insertar en el boton la informacion de la actividad
             activityButton.dataset.name = name;
@@ -315,4 +316,100 @@ document.querySelector('form').addEventListener('submit', (e) => {
 });
 
 
+const draggable = document.querySelectorAll('#botonActividades');
+const contenedor = document.querySelectorAll('#containerActivities');
 
+let divAlmacenado = null;
+
+draggable.forEach(div => {
+      div.addEventListener('dragstart', (event) =>{
+          div.classList.add('dragging');
+          divAlmacenado = div;
+          console.log(div);
+
+          event.dataTransfer.effectAllowed = "move"
+
+      });
+
+      div.addEventListener('dragend', () =>{
+          div.classList.remove('dragging');
+          divAlmacenado = null;
+      });
+});
+
+// Permitir el evento 'dragover' en el contenedor
+contenedor.forEach(container =>{
+
+    container.addEventListener('dragover', (event) => {
+        event.preventDefault(); // Necesario para permitir el drop y mover el elemento
+        const afterElement = getDragAfterElement(container, event.clientY);
+        const draggingElement = document.querySelector('.dragging');
+
+        // Inserta el elemento arrastrado antes del div correcto o al final si no hay ningún div después
+        if (afterElement == null) {
+          container.appendChild(draggingElement);
+        } else {
+          container.insertBefore(draggingElement, afterElement);
+        }
+      });
+
+      container.addEventListener('drop', (event) => {
+        event.preventDefault();
+        const draggingElement = document.querySelector('.dragging');
+        if (draggingElement) {
+            actualizarFechaYHora(draggingElement, container);
+            
+            location.reload();//refrescar la pagina
+        }
+    });
+})
+
+
+  // coge el div que está después de  donde se arrastra
+  const getDragAfterElement = (contenedor, y) => {
+      const draggableElements = [...contenedor.querySelectorAll('.draggable:not(.dragging)')];
+
+      return draggableElements.find(child => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        return offset < 0;
+      });
+  }
+
+  const actualizarFechaYHora = (elemento, nuevoContenedor) => {
+    const claseContenedor = nuevoContenedor.classList[0];
+    const [dia, hora] = claseContenedor.split('-').slice(1);
+    
+    let nuevaHora = hora;
+    if (dia === 'Viernes' && parseInt(hora) < 17) { 
+        nuevaHora = '17:00';
+    }
+
+    // Actualizar los datos del elemento
+    elemento.dataset.day = dia;
+    elemento.dataset.openHour = nuevaHora;
+
+    // Actualizar la actividad en el array y localStorage
+    const actividadIndex = activities.findIndex(act => act.nombre === elemento.dataset.name);
+    if (actividadIndex !== -1) {
+        activities[actividadIndex].dia = dia;
+        activities[actividadIndex].horaA = nuevaHora;
+        localStorage.setItem('activities', JSON.stringify(activities));
+    }
+
+    // Actualizar el texto del botón si es necesario
+    actualizarTextoBoton(elemento);
+}
+
+const actualizarTextoBoton = (elemento) => {
+    const modalBody = document.querySelector('#activityModal .modal-body');
+    if (modalBody) {
+        modalBody.innerHTML = `
+            <p><strong>Nombre de la actividad:</strong> ${elemento.dataset.name}</p>
+            <p><strong>Tipo de actividad:</strong> ${elemento.dataset.type}</p>
+            <p><strong>Día:</strong> ${elemento.dataset.day}</p>
+            <p><strong>Hora de inicio:</strong> ${elemento.dataset.openHour}</p>
+            <p><strong>Lugar:</strong> ${elemento.dataset.place}</p>
+        `;
+    }
+}

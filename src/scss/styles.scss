@@ -34,7 +34,11 @@ nav{
     background-color: #65183d;
 }
 #containerActivities{
-    min-height: 90%;
+    min-width: 100%;
+    height: auto; 
+    min-height: 30px;
+    margin: 0 auto; 
+    padding: 10px;
 }
 
 #botonActividades{
