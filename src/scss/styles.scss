@@ -87,3 +87,23 @@ nav{
     background-color: #95275c;
     color: #fadfec;
 }
+
+.footer-bg {
+  background-color:  #95275c !important;
+  color: white;
+  padding: 1rem;
+}
+
+.footer-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #ffffff;
+  border-radius: 8px;
+
+  &:hover {
+      background-color: #f2f2f2;
+  }
+}
