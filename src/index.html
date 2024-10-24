@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manchacomic</title>
+  <link rel="stylesheet" href="./scss/styles.scss">
+  <script type="module" src="./js/main.js"></script>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand img-fluid" href="./index.html"><img src="./assets/images/Manchacomic-logo.png"
+            alt="logoManchaComic" height="50px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active text-light" aria-current="page" href="#">XI Manchacómic 2024</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active text-light" aria-current="page" href="#">Manzanares</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link active text-light" aria-current="page" href="#">FAQs</a>
+  
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active text-light" aria-current="page" href="#">Contacto</a>
+            </li>
+            <li>
+              <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+            </li>
+          </ul>
+  
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div id="container mt-5">
+    <div class="row justify-content-center m-3 p-3">
+      <div class="col-md-8">
+        <div id="containerForm" >
+          
+          <form>
+            <p class="mb-4 h1 text-center">Registrar Actividad</p>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="activityName" class="form-label"> <b>Nombre de la actividad</b></label>
+                    <input type="text" class="form-control" id="activityName" placeholder="Introduce el nombre de la actividad">                  
+                </div>
+
+                <div class="mb-3">
+                  <label for="typeActivity" class="form-label"><b>Clase de actividad</b></label>
+                    <select class="form-control" id="typeActivity">
+                      <option selected disabled value="">-- Selecciona la actividad --</option>
+                      <option value="charla">Charla</option>
+                      <option value="taller">Taller</option>
+                      <option value="juegoMesa">Juegos de mesa</option>
+                      <option value="wargame">Wargame</option>
+                      <option value="rolSr">Rol/Escape Room</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="place" class="form-label"><b>Lugar</b></label>
+                    <select class="form-control" id="place">
+                      <option selected disabled value="">-- Selecciona el lugar -- </option>
+                      <option value="jardin">Jardines del Prado</option>
+                      <option value="casino">Antiguo Casino</option>
+                      <option value="cueva">Cueva</option>
+          
+                    </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="day" class="form-label"><b>Día</b></label>
+                    <select class="form-control" id="day">
+                      <option selected disabled value="">-- Selecciona el día -- </option>
+                      <option value="Viernes">Viernes</option>
+                      <option value="Sabado">Sábado</option>
+                      <option value="Domingo">Domingo</option>
+          
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="openHour" class="form-label"><b>Hora apertura </b></label>
+                    <select class="form-control" id="openHour">
+                      <option selected disabled value="">-- Selecciona la hora de apertura --</option>
+          
+                    </select>
+                  </div>
+
+                  <div class=" d-flex justify-content-end mt-5">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary min-w-100">Añadir Actividad</button>
+                  </div>
+
+                </div>
+
+              </div> 
+            </div> 
+          </form>
+        </div>        
+      </div>
+    </div>
+
+    <div class="table-responsive row mx-auto p-5">
+      <p class="mb-4 h1 text-center">Horario</p>
+      <table class="table table-striped " id="activityTable">
+        <thead class="tHead">
+
+        </thead>
+        <tbody class="table-group-divider" id="tBody">
+
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="activityModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary min-w-80" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+  </div>
+</body>
+
+<footer class="w-100 py-3 footer-bg text-white">
+  <div
+      class="container d-flex justify-content-between align-items-center"
+  >
+      <div>
+          &copy; 2025 ManchaComic. Todos los derechos reservados.
+      </div>
+      <div>
+          <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                  <a href="#"
+                      ><div class="footer-icon">
+                          <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              x="0px"
+                              y="0px"
+                              width="25"
+                              height="25"
+                              viewBox="0,0,256,256"
+                          >
+                              <g
+                                  fill="#85275C"
+                                  fill-rule="nonzero"
+                                  stroke="none"
+                                  stroke-width="1"
+                                  stroke-linecap="butt"
+                                  stroke-linejoin="miter"
+                                  stroke-miterlimit="10"
+                                  stroke-dasharray=""
+                                  stroke-dashoffset="0"
+                                  font-family="none"
+                                  font-weight="none"
+                                  font-size="none"
+                                  text-anchor="none"
+                                  style="mix-blend-mode: normal"
+                              >
+                                  <g transform="scale(5.12,5.12)">
+                                      <path
+                                          d="M32,11h5c0.552,0 1,-0.448 1,-1v-6.737c0,-0.524 -0.403,-0.96 -0.925,-0.997c-1.591,-0.113 -4.699,-0.266 -6.934,-0.266c-6.141,0 -10.141,3.68 -10.141,10.368v6.632h-7c-0.552,0 -1,0.448 -1,1v7c0,0.552 0.448,1 1,1h7v19c0,0.552 0.448,1 1,1h7c0.552,0 1,-0.448 1,-1v-19h7.222c0.51,0 0.938,-0.383 0.994,-0.89l0.778,-7c0.066,-0.592 -0.398,-1.11 -0.994,-1.11h-8v-5c0,-1.657 1.343,-3 3,-3z"
+                                      ></path>
+                                  </g>
+                              </g>
+                          </svg>
+                      </div>
+                  </a>
+              </li>
+              <li class="list-inline-item">
+                  <a href="#"
+                      ><div class="footer-icon">
+                        <!-- iconos -->
+                          <svg 
+                              xmlns="http://www.w3.org/2000/svg"
+                              x="0px"
+                              y="0px"
+                              width="25"
+                              height="25"
+                              viewBox="0,0,256,256"
+                          >
+                              <g
+                                  fill="#85275C"
+                                  fill-rule="nonzero"
+                                  stroke="none"
+                                  stroke-width="1"
+                                  stroke-linecap="butt"
+                                  stroke-linejoin="miter"
+                                  stroke-miterlimit="10"
+                                  stroke-dasharray=""
+                                  stroke-dashoffset="0"
+                                  font-family="none"
+                                  font-weight="none"
+                                  font-size="none"
+                                  text-anchor="none"
+                                  style="mix-blend-mode: normal"
+                              >
+                                  <g transform="scale(5.12,5.12)">
+                                      <path
+                                          d="M5.91992,6l14.66211,21.375l-14.35156,16.625h3.17969l12.57617,-14.57812l10,14.57813h12.01367l-15.31836,-22.33008l13.51758,-15.66992h-3.16992l-11.75391,13.61719l-9.3418,-13.61719zM9.7168,8h7.16406l23.32227,34h-7.16406z"
+                                      ></path>
+                                  </g>
+                              </g>
+                          </svg></div
+                  ></a>
+              </li>
+              <li class="list-inline-item">
+                  <a href="#">
+                      <div class="footer-icon">
+                          <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              x="0px"
+                              y="0px"
+                              width="25"
+                              height="25"
+                              viewBox="0,0,256,256"
+                          >
+                              <g
+                                  fill="#85275C"
+                                  fill-rule="nonzero"
+                                  stroke="none"
+                                  stroke-width="1"
+                                  stroke-linecap="butt"
+                                  stroke-linejoin="miter"
+                                  stroke-miterlimit="10"
+                                  stroke-dasharray=""
+                                  stroke-dashoffset="0"
+                                  font-family="none"
+                                  font-weight="none"
+                                  font-size="none"
+                                  text-anchor="none"
+                                  style="mix-blend-mode: normal"
+                              >
+                                  <g transform="scale(5.12,5.12)">
+                                      <path
+                                          d="M16,3c-7.16752,0 -13,5.83248 -13,13v18c0,7.16752 5.83248,13 13,13h18c7.16752,0 13,-5.83248 13,-13v-18c0,-7.16752 -5.83248,-13 -13,-13zM16,5h18c6.08648,0 11,4.91352 11,11v18c0,6.08648 -4.91352,11 -11,11h-18c-6.08648,0 -11,-4.91352 -11,-11v-18c0,-6.08648 4.91352,-11 11,-11zM37,11c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM25,14c-6.06329,0 -11,4.93671 -11,11c0,6.06329 4.93671,11 11,11c6.06329,0 11,-4.93671 11,-11c0,-6.06329 -4.93671,-11 -11,-11zM25,16c4.98241,0 9,4.01759 9,9c0,4.98241 -4.01759,9 -9,9c-4.98241,0 -9,-4.01759 -9,-9c0,-4.98241 4.01759,-9 9,-9z"
+                                      ></path>
+                                  </g>
+                              </g>
+                          </svg></div
+                  ></a>
+              </li>
+          </ul>
+      </div>
+  </div>
+</footer>
+
+</html>

@@ -1,0 +1,109 @@
+// Import all of Bootstrap's CSS
+@import "bootstrap/scss/bootstrap";
+
+nav{
+    background-color: #95275c;
+}
+
+.h1{
+    color: #95275c;
+}
+
+#containerForm {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #85275C;
+  }
+
+  .form-title {
+    color: #85275C;
+  }
+
+.btn-primary{
+    border: 2px solid #95275c;
+    color: #65183d;
+    background-color: #fadfec;
+    width: 100%;
+}
+
+.btn-primary:hover{
+    border: 2px solid #fadfec;
+    color: #fadfec;
+    background-color: #65183d;
+}
+#containerActivities{
+    min-width: 100%;
+    height: auto; 
+    min-height: 30px;
+    margin: 0 auto; 
+    padding: 10px;
+}
+
+#botonActividades{
+    display: block; 
+    width: 100%;
+}
+
+#activityTable .bg-success {
+    background-color: #77c9f5 !important;
+    border: 2px solid #95275c;
+}
+
+#activityTable .bg-success:hover{
+    border: 2px solid #fadfec;
+    color: #fadfec;
+    background-color: #77c9f5;
+}
+  
+#activityTable .bg-info {
+    background-color: #83edbf !important;
+    border: 2px solid #95275c;
+  }
+
+  #activityTable .bg-info:hover{
+    border: 2px solid #fadfec;
+    color: #fadfec;
+    background-color: #83edbf;
+  }
+  
+  #activityTable .bg-danger {
+    background-color: #ed89ea !important;
+    border: 2px solid #95275c;
+  }
+
+  #activityTable .bg-danger:hover{
+    border: 2px solid #fadfec;
+    color: #fadfec;
+    background-color: #83edbf;
+  }
+  
+  #activityTable .activity-button {
+    color: black !important;
+  }
+
+.modal-header{
+    background-color: #95275c;
+    color: #fadfec;
+}
+
+.footer-bg {
+  background-color:  #95275c !important;
+  color: white;
+  padding: 1rem;
+}
+
+.footer-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #ffffff;
+  border-radius: 8px;
+
+  &:hover {
+      background-color: #f2f2f2;
+  }
+}
